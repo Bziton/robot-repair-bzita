@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2934828664242984792}
   - component: {fileID: 2562640625542175533}
   - component: {fileID: 3491164739567216148}
-  m_Layer: 0
+  - component: {fileID: 2143255764921008854}
+  m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +168,26 @@ MonoBehaviour:
   speed: 3
   maxHealth: 5
   timeInvincible: 1.5
+  projectilePrefab: {fileID: 7604739527957236391, guid: cc3fef9fa974006468907a7989e681d9,
+    type: 3}
+  LaunchAction:
+    m_Name: Launch
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 9f06e3c1-c978-4c1a-afd1-141c81e84d76
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f8e479d1-4966-48f3-983f-b9fa1cbe453a
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Launch
+      m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
 --- !u!50 &2562640625542175533
 Rigidbody2D:
   serializedVersion: 5
@@ -240,3 +261,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.539, y: 0.5525}
   m_EdgeRadius: 0
+--- !u!95 &2143255764921008854
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741200312781121043}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 34d36e1bead33a942930d6f3d41aa8fa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
