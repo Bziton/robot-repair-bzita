@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public InputAction LaunchAction;
 
+    public float timeBetweenShots = 0.5f;
+    bool canLaunch = true;
+    float launchCooldown;
+
     void Start()
     {
         MoveAction.Enable();
@@ -55,9 +59,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (LaunchAction.WasPressedThisFrame())
+        if (!canLaunch)
+        {
+            launchCooldown -= Time.deltaTime;
+            if (launchCooldown < 0)
+            {
+                canLaunch = true;
+            }
+        }
+
+        if (LaunchAction.WasPressedThisFrame() && canLaunch)
         {
             Launch();
+            canLaunch = false;
+            launchCooldown = timeBetweenShots;
         }
     }
 
