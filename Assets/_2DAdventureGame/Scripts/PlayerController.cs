@@ -21,24 +21,23 @@ public class PlayerController : MonoBehaviour
 
     public GameObject projectilePrefab;
     public InputAction LaunchAction;
+    public InputAction TalkAction;
 
-    public float timeBetweenShots = 0.5f;
-    bool canLaunch = true;
-    float launchCooldown;
+    private NonPlayerCharacter lastNonPlayerCharacter;
 
     void Start()
     {
         MoveAction.Enable();
         LaunchAction.Enable();
+        TalkAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         move = MoveAction.ReadValue<Vector2>();
-        //Debug.Log(move);
 
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
@@ -59,20 +58,29 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!canLaunch)
-        {
-            launchCooldown -= Time.deltaTime;
-            if (launchCooldown < 0)
-            {
-                canLaunch = true;
-            }
-        }
-
-        if (LaunchAction.WasPressedThisFrame() && canLaunch)
+        if (LaunchAction.WasPressedThisFrame())
         {
             Launch();
-            canLaunch = false;
-            launchCooldown = timeBetweenShots;
+        }
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            rigidbody2d.position + Vector2.up * 0.2f,
+            moveDirection, 1.5f, LayerMask.GetMask("NPC"));
+
+        if (hit.collider != null)
+        {
+            NonPlayerCharacter npc = hit.collider.GetComponent<NonPlayerCharacter>();
+            npc.dialogueBubble.SetActive(true);
+            lastNonPlayerCharacter = npc;
+            FindFriend();
+        }
+        else
+        {
+            if (lastNonPlayerCharacter != null)
+            {
+                lastNonPlayerCharacter.dialogueBubble.SetActive(false);
+                lastNonPlayerCharacter = null;
+            }
         }
     }
 
@@ -96,16 +104,23 @@ public class PlayerController : MonoBehaviour
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log(currentHealth + "/" + maxHealth);
+        UIHandler.instance.SetHealthValue(currentHealth / (float)maxHealth);
     }
 
     void Launch()
     {
-        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-
+        GameObject projectileObject = Instantiate(projectilePrefab,
+            rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(moveDirection, 300);
-
         animator.SetTrigger("Launch");
+    }
+
+    void FindFriend()
+    {
+        if (TalkAction.WasPressedThisFrame())
+        {
+            UIHandler.instance.DisplayDialogue();
+        }
     }
 }

@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="LoseScreenContainer" style="flex-grow: 1; opacity: 0; position: absolute; left: 0%; top: 0%; right: 0%; bottom: 0%; -unity-text-outline-color: rgba(0, 0, 0, 0); color: rgb(27, 27, 27); transition-property: opacity;">
+        <ui:VisualElement name="LoseScreen" style="flex-grow: 1; transition-duration: 1s; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Tutorial_Demo/Demo_Art/Common/LoseScreen.png?fileID=2800000&amp;guid=68999694f4e00437a8c4f0b6053e3d45&amp;type=3#LoseScreen&quot;); -unity-background-scale-mode: scale-to-fit;"/>
+    </ui:VisualElement>
+</ui:UXML>
